@@ -6,7 +6,7 @@
 
 More information is available in the `python-docx documentation`_.
 
-This for adds a proof of concept for using docx documents as templates. 
+This fork adds a proof of concept for using docx documents as templates. 
 Two templating engines (django and jinja) are supported.
 Template instructions can be written directly in Word or handcrafted in the document.xml
 If written in Word, Block-Level tags must have a style named "TEMPLATE_BLOG" attached.
