@@ -145,12 +145,14 @@ class Document(object):
         """
         return self._document_part.paragraphs
 
-    def save(self, path_or_stream):
+    def save(self, path_or_stream, context=None, engine="django"):
         """
         Save this document to *path_or_stream*, which can be either a path to
         a filesystem location (a string) or a file-like object.
+        If context is not none, the document will be treated as a template and 
+        fed into the templating engine (can be "django" or "djina") before saving.
         """
-        self._package.save(path_or_stream)
+        self._package.save(path_or_stream, context=context, engine=engine)
 
     @property
     def sections(self):
@@ -196,3 +198,4 @@ class Document(object):
             tmpl = "file '%s' is not a Word file, content type is '%s'"
             raise ValueError(tmpl % (docx, document_part.content_type))
         return document_part, package
+
