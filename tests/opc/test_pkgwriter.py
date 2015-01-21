@@ -32,7 +32,7 @@ class DescribePackageWriter(object):
         expected_calls = [
             call._write_content_types_stream(phys_writer, parts),
             call._write_pkg_rels(phys_writer, pkg_rels),
-            call._write_parts(phys_writer, parts),
+            call._write_parts(phys_writer, parts, context=None, engine='django'),
         ]
         PhysPkgWriter_.assert_called_once_with(pkg_file)
         assert _write_methods.mock_calls == expected_calls

@@ -86,7 +86,7 @@ class DescribeDocument(object):
     def it_can_save_the_document_to_a_file(self, save_fixture):
         document, file_ = save_fixture
         document.save(file_)
-        document._part.save.assert_called_once_with(file_)
+        document._part.save.assert_called_once_with(file_, context=None, engine='django')
 
     def it_provides_access_to_its_core_properties(self, core_props_fixture):
         document, core_properties_ = core_props_fixture
