@@ -13,6 +13,7 @@ from .packuri import CONTENT_TYPES_URI, PACKAGE_URI
 from .phys_pkg import PhysPkgWriter
 from .shared import CaseInsensitiveDict
 from .spec import default_content_types
+from docx.engines import EngineFactory
 
 
 class PackageWriter(object):
@@ -23,7 +24,7 @@ class PackageWriter(object):
     be instantiated.
     """
     @staticmethod
-    def write(pkg_file, pkg_rels, parts):
+    def write(pkg_file, pkg_rels, parts, context=None, engine="django"):
         """
         Write a physical package (.pptx file) to *pkg_file* containing
         *pkg_rels* and *parts* and a content types stream based on the
@@ -32,7 +33,7 @@ class PackageWriter(object):
         phys_writer = PhysPkgWriter(pkg_file)
         PackageWriter._write_content_types_stream(phys_writer, parts)
         PackageWriter._write_pkg_rels(phys_writer, pkg_rels)
-        PackageWriter._write_parts(phys_writer, parts)
+        PackageWriter._write_parts(phys_writer, parts, context=context, engine=engine)
         phys_writer.close()
 
     @staticmethod
@@ -44,17 +45,27 @@ class PackageWriter(object):
         cti = _ContentTypesItem.from_parts(parts)
         phys_writer.write(CONTENT_TYPES_URI, cti.blob)
 
+    
     @staticmethod
-    def _write_parts(phys_writer, parts):
+    def _write_parts(phys_writer, parts, context=None, engine="django"):
         """
         Write the blob of each part in *parts* to the package, along with a
         rels item for its relationships if and only if it has any.
         """
+        def render(part, context, engine):
+            """ treat this part as a template and feed it into the template engine if we have a context """
+            if context is None:
+                return part.blob
+            else:
+                engine = EngineFactory(engine)
+                return engine.render(part.blob, context)
+          
         for part in parts:
-            phys_writer.write(part.partname, part.blob)
+            phys_writer.write(part.partname, render(part, context, engine))
             if len(part._rels):
                 phys_writer.write(part.partname.rels_uri, part._rels.xml)
 
+                
     @staticmethod
     def _write_pkg_rels(phys_writer, pkg_rels):
         """

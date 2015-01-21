@@ -150,15 +150,15 @@ class OpcPackage(object):
         """
         return Relationships(PACKAGE_URI.baseURI)
 
-    def save(self, pkg_file):
+    def save(self, pkg_file, context=None, engine="django"):
         """
         Save this package to *pkg_file*, where *file* can be either a path to
         a file (a string) or a file-like object.
         """
         for part in self.parts:
             part.before_marshal()
-        PackageWriter.write(pkg_file, self.rels, self.parts)
-
+        PackageWriter.write(pkg_file, self.rels, self.parts, context=context, engine=engine)
+        
     @property
     def _core_properties_part(self):
         """
