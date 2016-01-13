@@ -15,6 +15,8 @@ class Engine(base):
     def render(self, template, context):
         xml = self.fix_tag_gaps(template)
         xml = self.fix_block_tags(xml)
+        if not xml:
+            return template
         self.template = Template(xml.decode("utf8"))
         self._register_filters()
         return self.template.render(context).encode("utf8")

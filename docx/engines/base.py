@@ -61,7 +61,8 @@ class Engine():
         logger.info("""TemplateReader._fix_block_gaps()""")
         parser = etree.XMLParser(ns_clean=True, recover=True, encoding='utf-8')
         root = etree.fromstring( bytes(bytearray(xml)), parser=parser)
-    
+        if root is None:
+            return None
         for xpath in [".//w:pStyle[@w:val='TEMPLATEBLOCK']", ".//w:rStyle[@w:val='TEMPLATEBLOCKChar']"]:
             nodelist = root.xpath(xpath, namespaces=self.namespaces)
             logger.debug("""TemplateReader._fix_block_tags: found %s container-elements""" % len(nodelist))
