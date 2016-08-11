@@ -39,8 +39,11 @@ opendocs:
 register:
 	$(SETUP) register
 
-sdist:
+sdist: clean
 	$(SETUP) sdist
+
+bdist: clean
+	$(SETUP) bdist_wheel --universal
 
 upload:
 	$(SETUP) sdist upload
