@@ -1,25 +1,17 @@
 language: python
 python:
-- '2.7'
+- '3.6'
 install:
 - pip install -U pip wheel
 - pip install tox
 script:
-- tox -epy27
+- tox -epy36
 - make sdist bdist
 sudo: false
 deploy:
-  - provider: releases
-    api_key:
-      secure: qnIY0YjNaam3eOsSUry3DIuQPmyBPeRQZHop3tIpifJdj93KPkW4XjkBae6Uj2oejUoaBP6Oyx0x5/iLpLBfFlbOaOPbT3j6+afCmDZJB1aQf5wmsj+WPnibtc1olDMrSCa6mpuBUat8n6lL14QU4UtnkRcT2KPH32ZvtMSJu4sHUGn4jVBku/AUiyveEJO4F4YMd6sPhX1Ybx+2SdphDM/PFrS7ikM4bs5nI2fEWoN2ixRC7kXEyOiM8urDfYQJd+2GeR5QI3EveERZX5j62PezoNBZ0GW9qGrJ/d7wyfZS8o+pez/XVej2FJRu9kj6vEW8YQ0SRiCiW6E0JNRIIMgJuu6QvfR0PNJ8VdnSnITWpAlHDSOSwmm8ayMJ/tbqiPthFTgCl6TZ9I+Hd3eUIufnHu4nNmwG5Wjsm4yoInMWcVir11wHexhw+GVc8NET265wjJnuLi/gE0sKwpmQjKeXwjBeYUoR+5J7UYiKKQu7F5e5O+kUrrJbMiyZf5kpnD1vvfRZm4/rg8Pr5pKCL34XGmlL+uVm8ktOcZuPCJnd4L9EztpmlrVAEHu7WGc9j2/Yl2OsvIaD7OfD0WckefjE9om6YYkLMpzn+vyyg97r6s4+RZgDHjvuoj1hGPCrfe4BuFMWsQk6ieozqpQCCmV6j99Icc5iHDdgH8Uu/LA=
-    file: dist/*
-    file_glob: true
-    skip_cleanup: true
-    on:
-      tags: true
-      repo: 3stack-software/python-docx
   - provider: script
     script: bash dist_gemfury.sh
+    skip_cleanup: true
     on:
       tags: true
 cache:
