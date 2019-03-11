@@ -24,7 +24,7 @@ class PackageWriter(object):
     be instantiated.
     """
     @staticmethod
-    def write(pkg_file, pkg_rels, parts, context=None, engine="django"):
+    def write(pkg_file, pkg_rels, parts, context=None, engine=None):
         """
         Write a physical package (.pptx file) to *pkg_file* containing
         *pkg_rels* and *parts* and a content types stream based on the
@@ -46,7 +46,7 @@ class PackageWriter(object):
         phys_writer.write(CONTENT_TYPES_URI, cti.blob)
 
     @staticmethod
-    def _write_parts(phys_writer, parts, context=None, engine="django"):
+    def _write_parts(phys_writer, parts, context=None, engine=None):
         """
         Write the blob of each part in *parts* to the package, along with a
         rels item for its relationships if and only if it has any.

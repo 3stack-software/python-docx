@@ -109,7 +109,7 @@ class DescribeOpcPackage(object):
         for part in parts_:
             part.before_marshal.assert_called_once_with()
         PackageWriter_.write.assert_called_once_with(
-            pkg_file_, pkg._rels, parts_, context=None, engine='django'
+            pkg_file_, pkg._rels, parts_, context=None, engine=None
         )
 
     def it_provides_access_to_the_core_properties(self, core_props_fixture):

@@ -35,7 +35,7 @@ class DescribeDocumentPart(object):
     def it_can_save_the_package_to_a_file(self, save_fixture):
         document, file_ = save_fixture
         document.save(file_)
-        document._package.save.assert_called_once_with(file_, context=None, engine='django')
+        document._package.save.assert_called_once_with(file_, context=None, engine=None)
 
     def it_can_get_or_add_an_image(self, get_image_fixture):
         document_part, path, image_part_, rId_, image_ = get_image_fixture

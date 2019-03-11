@@ -150,7 +150,7 @@ class OpcPackage(object):
         """
         return Relationships(PACKAGE_URI.baseURI)
 
-    def save(self, pkg_file, context=None, engine="django"):
+    def save(self, pkg_file, context=None, engine=None):
         """
         Save this package to *pkg_file*, where *file* can be either a path to
         a file (a string) or a file-like object.
